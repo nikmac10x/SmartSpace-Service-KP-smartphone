@@ -1,27 +1,14 @@
 package ru.nikmac10x.smartservice;
 
+import java.util.ArrayList;
+
+import sofia_kp.KPICore;
+
 /**
  * Created by User on 08.05.2018.
  */
 public class SSAgent {
-    private int ssPort;
-    private int ssId;
-
-    public int getSsId() {
-        return ssId;
-    }
-
-    public void setSsId(int ssId) {
-        this.ssId = ssId;
-    }
-
-    public int getSsPort() {
-        return ssPort;
-    }
-
-    public void setSsPort(int ssPort) {
-        this.ssPort = ssPort;
-    }
+    private KPICore kp;
 
     public void join() {
 
@@ -31,8 +18,16 @@ public class SSAgent {
 
     }
 
-    public Raspberry[] getListOfRaspberry() {
-        return null;
+    public ArrayList<Raspberry> getListOfRaspberry() {
+        ArrayList<Raspberry> listOfRaspberry = new ArrayList<Raspberry>();
+
+        /* Здесь должно быть получение списка из ИП */
+
+        listOfRaspberry.add(new Raspberry("127.0.0.1:11111"));
+        listOfRaspberry.add(new Raspberry("127.0.0.1:11112"));
+        listOfRaspberry.add(new Raspberry("127.0.0.1:11113"));
+
+        return listOfRaspberry;
     }
 
     public void sendPersonalData() {
@@ -41,5 +36,10 @@ public class SSAgent {
 
     public void startTranslation() {
 
+    }
+
+    public SSAgent(String SIBHost, int SIBPort) {
+        kp = new KPICore(SIBHost, SIBPort,"X");
+        
     }
 }
