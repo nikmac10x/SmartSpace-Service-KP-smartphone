@@ -4,36 +4,36 @@ package ru.nikmac10x.smartservice;
  * Created by User on 08.05.2018.
  */
 public class Raspberry {
-    private int raspPort; //Порт raspberry
-    private String raspIp; //IP-адресс raspberry
+    private String raspIp;
+    private int raspPort;
 
-    public String getRaspIp() {
-        return raspIp;
-    }
 
     private void setRaspIp(String ip) {
         this.raspIp = ip;
     }
-
-    public int getRaspPort() {
-        return raspPort;
-    }
-
     private void setRaspPort(String port) {
         this.raspPort = Integer.parseInt(port);
     }
 
-    public Raspberry(String adrr) {
-        int index = adrr.indexOf(':');
-
-        setRaspIp(adrr.substring(0, index));
-        setRaspPort(adrr.substring(index+1));
+    public String getRaspIp() {
+        return raspIp;
+    }
+    public int getRaspPort() {
+        return raspPort;
     }
 
 
-    //Переопределение метода toString для отображения списка
+    public Raspberry(String adrr) {
+        // Получение значений ip и port из строки
+        int pos = adrr.indexOf(':');
+        if (pos != -1) {
+            setRaspIp(adrr.substring(0, pos));
+            setRaspPort(adrr.substring(pos + 1));
+        }
+    }
+
     @Override
     public String toString() {
-        return "ip: " + raspIp + ":" + "port: " + raspPort;
+        return raspIp + ":" + raspPort;
     }
 }
