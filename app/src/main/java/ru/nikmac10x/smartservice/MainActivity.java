@@ -1,6 +1,10 @@
 package ru.nikmac10x.smartservice;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.media.projection.MediaProjectionManager;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,12 +13,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.Date;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "myLogs";
 
     Button joinBT;
-    Button aboutMeBT;
 
     EditText ssipET;
     EditText ssportET;
@@ -30,15 +37,11 @@ public class MainActivity extends AppCompatActivity {
 
         //получение объектов кнопок
         joinBT = (Button) findViewById(R.id.joinBT);
-        aboutMeBT = (Button) findViewById(R.id.aboutMeBT);
 
         //обработчик кнопки "Подключиться"
         joinBT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Button button = (Button) v;
-                button.setClickable(false);
-
                 //Проверка ввода адреса
                 String ssip = ssipET.getText().toString();
                 if (ssip.matches("^[0-9]{1,3}(\\.[0-9]{1,3}){3}$")) {
@@ -66,13 +69,5 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //Обработчик кнопки "О себе"
-        aboutMeBT.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, DataActivity.class);
-                startActivity(intent);
-            }
-        });
     }
 }

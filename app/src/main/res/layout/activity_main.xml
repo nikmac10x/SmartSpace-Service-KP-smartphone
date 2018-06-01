@@ -46,5 +46,4 @@
         android:layout_marginTop="206dp"
         android:text="Подключиться"/>
 
-
 </RelativeLayout>

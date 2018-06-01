@@ -13,7 +13,7 @@ import sofia_kp.SSAP_XMLTools;
 /**
  * Created by User on 08.05.2018.
  */
-public class SSAgent extends Thread {
+public class SSAgent {
 
     private static final String TAG = "myLogs";
     private static final String ns = "http://translation#";
@@ -40,6 +40,9 @@ public class SSAgent extends Thread {
             public void run() {
                 Log.d(TAG, "in thread: kp join..");
                 resp = kp.join();
+
+                sendPersonalData();
+                initListOfRaspberry();
             }
         });
 
@@ -73,45 +76,46 @@ public class SSAgent extends Thread {
         }
     }
 
-    public static void setListOfRaspberry() {
-        final ArrayList<Raspberry> listOfRaspberry = new ArrayList<Raspberry>();
+    /*
+    Вызывать только в функции ssJoin
+     */
+    private static void initListOfRaspberry() {
+        listOfRaspberry = new ArrayList<Raspberry>();
 
         /* Получение списка из ИП */
-
-        // Поток для работы с сетью
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Log.d(TAG, "in thread: query..");
-                resp = kp.queryRDF(ns + "subject", ns + "predicate", null, "uri", "literal");
-                if (resp.isConfirmed()) {
-                    Log.d(TAG, "in thread: queryRDF isConfirmed");
-                    if (resp.query_results != null) {
-                        Log.d(TAG, "in thread: list not null");
-                        /* Заполнение списка */
-
-
+        Log.d(TAG, "in thread: query..");
+        resp = kp.queryRDF(ns+"raspberry"+1, ns + "use", null, "uri", "literal");
+        if (resp.isConfirmed()) {
+            Log.d(TAG, "in thread: queryRDF isConfirmed");
+            if (resp.query_results != null) {
+                Log.d(TAG, "in thread: list not null");
+                /* Заполнение списка */
+                ArrayList<ArrayList<String>> triples = resp.query_results;
+                if (!triples.isEmpty()) {
+                    for(int i = 0; i < triples.size(); i++) {
+                        String s = triples.get(i).get(2);
+                        listOfRaspberry.add(new Raspberry(s));
                     }
                 }
             }
-        });
-
-        try {
-            Log.d(TAG, "thread start..");
-            thread.start();
-            Log.d(TAG, "thread join..");
-            thread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         }
-
-        Log.d(TAG, "return..");
-
-
     }
 
     public static void sendPersonalData() {
+        ArrayList<String> triple = new ArrayList<String>();
+        ArrayList<ArrayList<String>> triples = new ArrayList<ArrayList<String>>();
 
+        triple.add(ns+"raspberry"+1);
+        triple.add(ns + "use");
+        triple.add("127.34.32.57:900");
+        triple.add("uri");
+        triple.add("literal");
+
+        triples.add(triple);
+        kp.insert(triples);
+        if (resp.isConfirmed()) {
+            Log.d(TAG, "insert triples");
+        }
     }
 
     public static void startTranslation() {

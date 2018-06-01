@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Отключиться"
-        android:id="@+id/button4"
+        android:id="@+id/leaveBT"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         android:layout_marginBottom="29dp"
@@ -20,8 +20,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="О себе"
-        android:id="@+id/button5"
-        android:layout_above="@+id/button4"
+        android:id="@+id/aboutMeBT"
+        android:layout_above="@+id/leaveBT"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"/>
 
@@ -46,12 +46,23 @@
         android:layout_alignParentEnd="true"/>
 
     <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/raspberryLS"
-        android:layout_below="@+id/textView3"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="27dp"
+        android:layout_width="wrap_content"
+        android:layout_height="231dp"
         android:layout_above="@+id/button5"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView3"
+        android:layout_marginTop="27dp"
         android:choiceMode="singleChoice"/>
+
+    <Button
+        android:id="@+id/translationBT"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/aboutMeBT"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="0dp"
+        android:text="Начать трансляцию"
+        android:visibility="invisible"/>
+
 </RelativeLayout>
