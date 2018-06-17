@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TabHost;
+import android.widget.TextView;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -24,75 +25,79 @@ public class SmartSpaceActivity extends AppCompatActivity {
 
     private static final String TAG = "myLogs";
 
+    TextView status;
+
     ListView raspberryLS;
 
     Button translationBT;
     Button aboutMeBT;
-    Button leaveBT;
+
+    private int RASPBERRY_POS = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_smart_space);
 
-        leaveBT = (Button) findViewById(R.id.leaveBT);
         aboutMeBT = (Button) findViewById(R.id.aboutMeBT);
         raspberryLS = (ListView) findViewById(R.id.raspberryLS);
+        status = (TextView) findViewById(R.id.string_status_id);
+
+        status.setText(Status.getCurrentStatus());
+
+
 
         aboutMeBT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(SmartSpaceActivity.this, DataActivity.class);
+                Status.setStatus(R.string.input_user_data_status);
                 startActivity(intent);
             }
         });
 
+
+
+
         //Получение списка Raspberry
-        ArrayList<Raspberry> listOfRaspberry = SSAgent.getListOfRaspberry();
+        final ArrayList<Raspberry> listOfRaspberry = SSAgent.getListOfRaspberry();
 
         //Вывод списка Raspberry
         if (listOfRaspberry != null && !listOfRaspberry.isEmpty()) {
-            ArrayAdapter<Raspberry> adapter = new ArrayAdapter<Raspberry>(this, android.R.layout.simple_list_item_1, listOfRaspberry);
+            ArrayAdapter<Raspberry> adapter = new ArrayAdapter<Raspberry>(this, android.R.layout.simple_list_item_checked, listOfRaspberry);
             raspberryLS.setAdapter(adapter);
         }
+
+
+
+
+
 
         translationBT = (Button) findViewById(R.id.translationBT);
         translationBT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Date now = new Date();
-                android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", now);
-
-                try {
-                    // image naming and path  to include sd card  appending name you choose for file
-                    String mPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString() + "/" + now + ".jpg";
-
-                    // create bitmap screen capture
-                    View v1 = getWindow().getDecorView().getRootView();
-                    v1.setDrawingCacheEnabled(true);
-                    Bitmap bitmap = Bitmap.createBitmap(v1.getDrawingCache());
-                    v1.setDrawingCacheEnabled(false);
-
-                    File imageFile = new File(mPath);
-
-                    FileOutputStream outputStream = new FileOutputStream(imageFile);
-                    int quality = 100;
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, quality, outputStream);
-                    outputStream.flush();
-                    outputStream.close();
-                    Log.d(TAG, "record");
-                } catch (Throwable e) {
-                    // Several error may come out with file handling or DOM
-                    e.printStackTrace();
-                }
+                Log.d(TAG, "start translation");
+                SSAgent.startTranslation(listOfRaspberry.get(RASPBERRY_POS), v);
             }
         });
 
         raspberryLS.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                RASPBERRY_POS = position;
                 translationBT.setVisibility(View.VISIBLE);
             }
         });
+
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        SSAgent.ssLeave();
     }
 }

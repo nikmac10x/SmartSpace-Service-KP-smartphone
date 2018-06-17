@@ -6,41 +6,43 @@
     android:layout_height="match_parent"
     tools:context="ru.nikmac10x.smartservice.SmartSpaceActivity">
 
-    <Button
-        android:layout_width="wrap_content"
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Отключиться"
-        android:id="@+id/leaveBT"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/status"/>
+
+        <TextView
+            android:id="@+id/string_status_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:text=""/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/aboutMeBT"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="29dp"
-        android:layout_alignParentEnd="true"/>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="О себе"
-        android:id="@+id/aboutMeBT"
-        android:layout_above="@+id/leaveBT"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="статус: подключено к ИП"
-        android:id="@+id/textView2"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="41dp"/>
+        android:layout_marginBottom="13dp"
+        android:text="О себе"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Выберите экран из списка"
+        android:text="@string/choice_screen_text"
         android:id="@+id/textView3"
-        android:layout_below="@+id/textView2"
         android:layout_alignParentStart="true"
         android:layout_marginTop="27dp"
         android:layout_alignParentEnd="true"/>
@@ -48,8 +50,7 @@
     <ListView
         android:id="@+id/raspberryLS"
         android:layout_width="wrap_content"
-        android:layout_height="231dp"
-        android:layout_above="@+id/button5"
+        android:layout_height="305dp"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/textView3"
         android:layout_marginTop="27dp"

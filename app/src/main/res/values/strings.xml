@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">SmartService</string>
+    <string name="ss_not_connection_status">Не подключенно к ИП</string>
+    <string name="ss_ok_connection_status">Подключенно к ИП</string>
+    <string name="input_user_data_status">Заполните поля</string>
+    <string name="saved_user_data_status">Данные успешно сохранены</string>
+    <string name="ss_request_translation_status">Запрос трансляции</string>
+    <string name="ss_ok_translation_status">Идет трансляция</string>
+    <string name="status">Статус:</string>
+
+
+    <string name="ss_connect_button">Подключиться</string>
+    <string name="ss_start_translation_button">Начать трансляцию</string>
+    <string name="user_data_button">О себе</string>
+    <string name="save_user_data_button">Сохранить</string>
+    <string name="choice_screen_text">Выберите экран для трансляции</string>
+
+
+    <string name="default_ss_port">10010</string>
+    <string name="default_ss_ip">192.168.0.103</string>
 </resources>

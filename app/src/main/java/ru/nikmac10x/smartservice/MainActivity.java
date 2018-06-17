@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -20,6 +21,8 @@ import java.util.Date;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "myLogs";
+
+    TextView status;
 
     Button joinBT;
 
@@ -31,12 +34,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //получение объектов полей
         ssipET = (EditText) findViewById(R.id.ssipET);
         ssportET = (EditText) findViewById(R.id.ssportET);
-
-        //получение объектов кнопок
         joinBT = (Button) findViewById(R.id.joinBT);
+        status = (TextView) findViewById(R.id.string_status_id);
+
+        status.setText(Status.getCurrentStatus());
 
         //обработчик кнопки "Подключиться"
         joinBT.setOnClickListener(new View.OnClickListener() {
@@ -56,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
                     if (SSAgent.ssJoin()) {
                         //запуск новой activity
                         Log.d(TAG, "start activity..");
+
+                        Status.setStatus(R.string.ss_ok_connection_status);
                         Intent intent = new Intent(MainActivity.this, SmartSpaceActivity.class);
                         startActivity(intent);
                     } else {
